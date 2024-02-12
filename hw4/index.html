@@ -1,3 +1,12 @@
+<head>
+    <title>Ваша страница</title>
+    <style>
+        .error {
+            border: 2px solid red;
+        }
+    </style>
+</head>
+
 <input id="from" type="text">
 В инпуте написано: <span></span>
 
@@ -59,8 +68,8 @@
     //     - Если поле пустое, необходимо данное поле подсветить (поставить класс error данному полю).
     //     - Если поле было чем-либо заполнено, подсветку (класс error) необходимо убрать.
     document.addEventListener('DOMContentLoaded', function() {
-        var form = document.querySelector('form');
-        var inputs = form.querySelectorAll('input, select');
+        const form = document.querySelector('form');
+        const inputs = form.querySelectorAll('input, select');
 
         function checkInput(input) {
             if (input.value.trim() === '') {
