@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Information</title>
+    <script src="data.js"></script> <!-- Linking the JavaScript file -->
+    <style>
+        .book-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 200px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<div id="book-content" class="book-container">
+</div>
+
+<!--Задание 2-->
+<!--1. Создать файл index.html.-->
+<!--2. Подключить data.js.-->
+<!--3. Сформировать контент из данных (картинка загловок и параграф).-->
+<!--4. Добавить данный контент в вёрстку.-->
+<!--5. * Добавить стили при необходимости (по желанию).-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchDataFromOpenLibrary();
+
+        setTimeout(function() {
+            if (apiData && apiData['ISBN:0451526538']) {
+                const bookData = apiData['ISBN:0451526538'];
+
+                const title = document.createElement('h1');
+                title.textContent = bookData.title;
+
+                const coverImage = document.createElement('img');
+                coverImage.src = bookData.cover.large;
+
+                const author = document.createElement('p');
+                author.textContent = `Author: ${bookData.authors.map(author => author.name).join(', ')}`;
+
+                const bookContent = document.getElementById('book-content');
+                bookContent.appendChild(title);
+                bookContent.appendChild(coverImage);
+                bookContent.appendChild(author);
+            }
+        }, 1000);
+    });
+</script>
+</body>
+</html>
