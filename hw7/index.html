@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .featured-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding: 20px;
+            width: calc(33% - 40px);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .item_img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .item p {
+            line-height: 1.5;
+            color: #666;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .item_img-wrapper {
+            position: relative;
+        }
+
+        .add-to-cart-btn {
+            display: none;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .item_img-wrapper:hover .add-to-cart-btn {
+            display: block;
+        }
+
+        .cart-items {
+            display: none;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .cart-item button {
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class='featured-items'></div>
+    <div class="cart-items"></div>
+    <script>
+        const itemsData = [
+            {
+                src: 'img.png',
+                name: "ELLERY X M'O CAPSULE 1",
+                desc: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.',
+                price: '52$'
+            },
+            {
+                src: 'img1.png',
+                name: "ELLERY X M'O CAPSULE 2",
+                desc: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.',
+                price: '52$'
+            },
+            {
+                src: 'img2.png',
+                name: "ELLERY X M'O CAPSULE 3",
+                desc: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.',
+                price: '52$'
+            },
+            {
+                src: 'img3.png',
+                name: "ELLERY X M'O CAPSULE 4",
+                desc: 'Known for her sculptural takes on traditional tailoring, Australian arbiter of cool Kym Ellery teams up with Moda Operandi.',
+                price: '52$'
+            }
+        ];
+
+        let cart = [];
+
+        itemsData.forEach(itemData => {
+            const items = document.querySelector('.featured-items');
+            const itemEl = document.createElement('div');
+            itemEl.classList.add('item');
+
+            const imgWrapper = document.createElement('div');
+            imgWrapper.classList.add('item_img-wrapper');
+
+            const itemImg = document.createElement('img');
+            itemImg.classList.add('item_img');
+            itemImg.setAttribute('alt', 'photo');
+            itemImg.src = itemData.src;
+            imgWrapper.appendChild(itemImg);
+
+            const addToCartBtn = document.createElement('button');
+            addToCartBtn.classList.add('add-to-cart-btn');
+            addToCartBtn.textContent = 'Add to Cart';
+            addToCartBtn.onclick = () => addToCart(itemData);
+            imgWrapper.appendChild(addToCartBtn);
+
+            const itemName = document.createElement('h3');
+            itemName.textContent = itemData.name;
+
+            const itemContent = document.createElement('div');
+            const itemDesc = document.createElement('p');
+            itemDesc.textContent = itemData.desc;
+
+            const itemPrice = document.createElement('p');
+            itemPrice.classList.add('price');
+            itemPrice.textContent = itemData.price;
+
+            itemContent.appendChild(itemDesc);
+            itemContent.appendChild(itemPrice);
+            itemEl.appendChild(imgWrapper);
+            itemEl.appendChild(itemName);
+            itemEl.appendChild(itemContent);
+            items.appendChild(itemEl);
+        });
+
+        function addToCart(item) {
+            cart.push(item);
+            updateCartUI();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartContainer = document.querySelector('.cart-items');
+            cartContainer.innerHTML = '';
+            if (cart.length > 0) {
+                cartContainer.style.display = 'block';
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.classList.add('cart-item');
+                    cartItem.textContent = item.name + ' - ' + item.price;
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.textContent = 'Remove';
+                    removeBtn.onclick = () => removeFromCart(index);
+                    cartItem.appendChild(removeBtn);
+
+                    cartContainer.appendChild(cartItem);
+                });
+            } else {
+                cartContainer.style.display = 'none';
+            }
+        }
+    </script>
+    </body>
+</html>
